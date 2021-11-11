@@ -14,7 +14,7 @@ const users = [];
 const initializePassport = require('./passport-config');
 initializePassport(passport, 
     email => users.find(user => user.email == email), 
-    users.find(user => user.id == id))
+    id => users.find(user => user.id == id))
 
 
 
@@ -52,7 +52,7 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 })
 
 
-app.post('register', checkNotAuthenticated, async (req, res) => {
+app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
     users.push({
@@ -86,7 +86,7 @@ function checkNotAuthenticated(req, res, next){
     }
     next();
 }
-
+console.log(users);
 app.listen(port, function(err){
     if(err){
         console.log(`Error in running the server: ${err}`);
